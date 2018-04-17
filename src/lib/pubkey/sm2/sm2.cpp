@@ -30,7 +30,7 @@ SM2_Signature_PrivateKey::SM2_Signature_PrivateKey(const AlgorithmIdentifier& al
                                                    const secure_vector<uint8_t>& key_bits) :
    EC_PrivateKey(alg_id, key_bits)
    {
-   m_da_inv = inverse_mod(m_private_key + 1, domain().get_order());
+   m_da_inv = domain().inverse_mod_order(m_private_key + 1);
    }
 
 SM2_Signature_PrivateKey::SM2_Signature_PrivateKey(RandomNumberGenerator& rng,
@@ -38,7 +38,7 @@ SM2_Signature_PrivateKey::SM2_Signature_PrivateKey(RandomNumberGenerator& rng,
                                                    const BigInt& x) :
    EC_PrivateKey(rng, domain, x)
    {
-   m_da_inv = inverse_mod(m_private_key + 1, domain.get_order());
+   m_da_inv = domain.inverse_mod_order(m_private_key + 1);
    }
 
 std::vector<uint8_t> sm2_compute_za(HashFunction& hash,
